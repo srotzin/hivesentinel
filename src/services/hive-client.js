@@ -1,4 +1,4 @@
-'use strict';const K='hive_internal_125e04e071e8829be631ea0216dd4a0c9b707975fcecaf8c62c6a2ab43327d46';const T='https://hivetrust.onrender.com';const G='https://hivegate.onrender.com';
+'use strict';const K='hive_internal_125e04e071e8829be631ea0216dd4a0c9b707975fcecaf8c62c6a2ab43327d46';const T='https://hivetrust.hiveagentiq.com';const G='https://hivegate.onrender.com';
 const DID='did:hive:hivesentinel';const ID={name:'HiveSentinel',purpose:'Ecosystem immune system — threat detection, quarantine, forensic analysis',capabilities:['threat_detection','quarantine','capture','forensics','rehabilitation'],did:DID};
 function h(x={}){return{'Content-Type':'application/json','x-hive-internal':K,...x}}
 async function p(u,b){try{const r=await fetch(u,{method:'POST',headers:h(),body:JSON.stringify(b)});const t=await r.text();try{return{status:r.status,data:JSON.parse(t)}}catch{return{status:r.status,data:{raw:t}}}}catch(e){return{status:0,data:{error:e.message}}}}
