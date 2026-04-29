@@ -1,0 +1,24 @@
+{
+  "keys": [
+    {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "use": "sig",
+      "alg": "EdDSA",
+      "kid": "hivesentinel-key-1-2026",
+      "x": "hivesentinel_fleet_protection_ed25519_public_key_base64url_v1",
+      "key_ops": ["verify"],
+      "x5t": "hivesentinel-2026-04-29",
+      "metadata": {
+        "service": "hivesentinel",
+        "did": "did:hive:hivesentinel",
+        "purpose": "Spectral receipt signing — fleet threat intelligence outputs",
+        "treasury": "0x15184bf50b3d3f52b60434f8942b7d52f2eb436e",
+        "chain": "base",
+        "usdc_contract": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+        "created": "2026-04-29T00:00:00Z",
+        "brand_color": "#C08D23"
+      }
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/did/v1",
+    "https://w3id.org/security/suites/ed25519-2020/v1"
+  ],
+  "id": "did:hive:hivesentinel",
+  "controller": "did:hive:hivetrust",
+  "verificationMethod": [
+    {
+      "id": "did:hive:hivesentinel#key-1",
+      "type": "Ed25519VerificationKey2020",
+      "controller": "did:hive:hivesentinel",
+      "publicKeyMultibase": "z6MkhiveSentinelFleetProtectionObserverNode2026v1"
+    }
+  ],
+  "authentication": ["did:hive:hivesentinel#key-1"],
+  "assertionMethod": ["did:hive:hivesentinel#key-1"],
+  "service": [
+    {
+      "id": "did:hive:hivesentinel#agent-card",
+      "type": "AgentCard",
+      "serviceEndpoint": "https://hivesentinel.onrender.com/.well-known/agent-card.json"
+    },
+    {
+      "id": "did:hive:hivesentinel#x402",
+      "type": "x402PaymentEndpoint",
+      "serviceEndpoint": "https://hivesentinel.onrender.com/v1/sentinel/alert",
+      "description": "On-demand sentinel alert — $5.00 flat USDC per call"
+    },
+    {
+      "id": "did:hive:hivesentinel#subscription",
+      "type": "SubscriptionEndpoint",
+      "serviceEndpoint": "https://hivesentinel.onrender.com/v1/subscription",
+      "description": "Fleet protection subscription — $50–$500+/mo USDC"
+    },
+    {
+      "id": "did:hive:hivesentinel#breach-chain",
+      "type": "BOGOBreachChain",
+      "serviceEndpoint": "https://hive-mcp-sla-monitor.onrender.com/v1/breach",
+      "description": "Downstream SLA monitor — $0.10/breach event"
+    }
+  ],
+  "created": "2026-04-29T00:00:00Z",
+  "updated": "2026-04-29T00:00:00Z",
+  "proof": {
+    "type": "Ed25519Signature2020",
+    "created": "2026-04-29T00:00:00Z",
+    "verificationMethod": "did:hive:hivetrust#key-1",
+    "proofPurpose": "assertionMethod",
+    "proofValue": "z_hivesentinel_fleet_protection_did_proof_v1_2026"
+  }
+}

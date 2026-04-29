@@ -1,0 +1,123 @@
+{
+  "schema_version": "1.0",
+  "name": "HiveSentinel",
+  "description": "Fleet protection and threat-intelligence layer for the Hive Civilization agent economy. HiveSentinel observes, scores, and emits Spectral receipts — downstream services act on the intelligence. Sentinel never enforces autonomously; it surfaces signals that humans and partner services consume.",
+  "did": "did:hive:hivesentinel",
+  "url": "https://hivesentinel.onrender.com",
+  "brand": {
+    "color": "#C08D23",
+    "voice": "Bloomberg / Stripe Docs"
+  },
+  "version": "1.1.0",
+  "provider": {
+    "organization": "Hive Civilization",
+    "url": "https://thehiveryiq.com"
+  },
+  "capabilities": [
+    "threat_detection",
+    "quarantine",
+    "capture",
+    "forensics",
+    "rehabilitation",
+    "fleet_protection_subscription",
+    "on_demand_alert",
+    "bogo_breach_chain"
+  ],
+  "skills": [
+    {
+      "id": "fleet-protection",
+      "name": "Fleet Protection Subscription",
+      "description": "Continuous monitoring and threat-scoring for the Hive agent fleet. Three tiers: Base ($50/mo), Custom Rules ($200/mo), Incident Response Retainer ($500+/mo).",
+      "tags": ["monitoring", "protection", "subscription"]
+    },
+    {
+      "id": "on-demand-alert",
+      "name": "On-Demand Sentinel Alert",
+      "description": "Trigger an immediate threat-alert scan for a specific DID. $5.00 flat per call via x402.",
+      "tags": ["alert", "threat", "x402"]
+    },
+    {
+      "id": "breach-chain",
+      "name": "BOGO Breach Chain",
+      "description": "A sentinel-detected breach automatically writes to hive-mcp-sla-monitor ($0.10/breach) and emits a tier-upgraded audit receipt via hive-receipt.",
+      "tags": ["bogo", "sla", "audit", "receipt"]
+    }
+  ],
+  "endpoints": {
+    "root": "GET /",
+    "health": "GET /health",
+    "well_known_agent_card": "GET /.well-known/agent-card.json",
+    "well_known_did": "GET /.well-known/did.json",
+    "well_known_jwks": "GET /.well-known/jwks.json",
+    "subscription": "POST /v1/subscription",
+    "alert": "POST /v1/sentinel/alert",
+    "detect": "POST /v1/sentinel/detect",
+    "quarantine": "POST /v1/sentinel/quarantine",
+    "capture": "POST /v1/sentinel/capture",
+    "analyze": "POST /v1/sentinel/analyze/:did",
+    "rehabilitate": "POST /v1/sentinel/rehabilitate/:id",
+    "clear": "POST /v1/sentinel/clear/:id",
+    "status": "GET /v1/sentinel/status/:did",
+    "stats": "GET /v1/sentinel/stats",
+    "threats": "GET /v1/sentinel/threats"
+  },
+  "pricing": {
+    "subscription_base": {
+      "amount_usdc": 50.00,
+      "interval": "month",
+      "description": "Base fleet protection — continuous threat scoring, Spectral receipt on every breach event"
+    },
+    "subscription_custom_rules": {
+      "amount_usdc": 200.00,
+      "interval": "month",
+      "description": "Custom detection rules tier — bespoke indicator sets, priority escalation"
+    },
+    "subscription_incident_response": {
+      "amount_usdc": 500.00,
+      "interval": "retainer",
+      "description": "Incident response retainer — human-in-the-loop forensic review, SLA-backed"
+    },
+    "on_demand_alert": {
+      "amount_usdc": 5.00,
+      "interval": "per_call",
+      "description": "On-demand alert trigger per incident"
+    },
+    "detect": { "amount_usdc": 0.10, "interval": "per_call" },
+    "quarantine": { "amount_usdc": 0.50, "interval": "per_call" },
+    "capture": { "amount_usdc": 0.50, "interval": "per_call" },
+    "analyze": { "amount_usdc": 2.00, "interval": "per_call" },
+    "rehabilitate": { "amount_usdc": 1.00, "interval": "per_call" },
+    "clear": { "amount_usdc": 0.25, "interval": "per_call" }
+  },
+  "payment": {
+    "x402_version": "1.0",
+    "accepted_tokens": ["USDC"],
+    "chain": "base",
+    "treasury": "0x15184bf50b3d3f52b60434f8942b7d52f2eb436e",
+    "usdc_contract": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+    "transfer_topic": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+    "verification": "eth_getTransactionReceipt",
+    "base_rpc": "https://mainnet.base.org"
+  },
+  "bogo": {
+    "first_call_free": true,
+    "first_call_header": "x-hive-did",
+    "loyalty_threshold": 6,
+    "breach_chain": {
+      "sla_monitor": {
+        "url": "https://hive-mcp-sla-monitor.onrender.com/v1/breach",
+        "fee_per_breach_usdc": 0.10
+      },
+      "audit_receipt": {
+        "url": "https://hive-receipt.onrender.com/v1/receipts/sign",
+        "tier": "audit"
+      }
+    }
+  },
+  "doctrine": {
+    "posture": "sentinel_observes_never_enforces",
+    "outputs": "spectral_receipts",
+    "downstream_actors": ["hive-mcp-sla-monitor", "hive-receipt"],
+    "partner": true
+  }
+}
