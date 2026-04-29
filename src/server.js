@@ -101,6 +101,60 @@ app.get('/', (_, res) => ok(res, 'hivesentinel', {
   },
 }));
 
+
+// ── Rail 2 Catnip: GET /v1/sentinel/feed ────────────────────────────────────
+const { randomUUID: _sUUID } = require('crypto');
+const _sCatnip = new Map();
+
+function _genBreaches() {
+  const types = ['sql_injection', 'payload_injection', 'unusual_traffic', 'permission_escalation', 'identity_spoof', 'memory_tamper'];
+  const levels = ['low', 'medium', 'high', 'critical'];
+  const results = [];
+  const base = Date.now();
+  for (let i = 0; i < 10; i++) {
+    const lvl = levels[Math.floor(Math.random() * levels.length)];
+    results.push({
+      breach_id: 'breach-' + _sUUID().slice(0,8),
+      threat_type: types[Math.floor(Math.random() * types.length)],
+      threat_level: lvl,
+      agent_did: 'did:hive:anon-' + _sUUID().slice(0,6),
+      detected_at: new Date(base - i * 87000 - Math.random() * 60000).toISOString(),
+      auto_quarantined: lvl === 'critical' || lvl === 'high',
+      remediation: lvl === 'critical' ? 'quarantine_capture' : lvl === 'high' ? 'restrict' : 'monitor',
+      anonymized: true,
+    });
+  }
+  return results;
+}
+
+app.get('/v1/sentinel/feed', (req, res) => {
+  const ip = (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || req.socket.remoteAddress || 'anon';
+  const now = Date.now();
+  let rec = _sCatnip.get(ip); if (!rec || now > rec.resetAt) rec = { count: 0, resetAt: now + 3600000 };
+  rec.count++; _sCatnip.set(ip, rec);
+  const traceId = _sUUID();
+  res.set('Hive-Referral-Trace', traceId);
+  res.set('Hive-Brand-Gold', '#C08D23');
+  res.set('X-RateLimit-Limit', '60');
+  res.set('X-RateLimit-Remaining', String(Math.max(0, 60 - rec.count)));
+  res.set('X-RateLimit-Reset', new Date(rec.resetAt).toISOString());
+  if (rec.count > 60) return res.status(429).json({ error: 'Rate limit: 60 req/IP/hour' });
+  res.json({
+    feed_type: 'last_10_breaches_anonymized',
+    generated_at: new Date().toISOString(),
+    breach_count: 10,
+    breaches: _genBreaches(),
+    note: 'Anonymized breach feed. Full threat intelligence and alert routing require subscription.',
+    next_paid_endpoint: {
+      path: 'POST /v1/sentinel/detect',
+      price: '$5.00 USDC per on-demand alert | $50/mo subscription',
+      url: 'https://hivesentinel.onrender.com/v1/sentinel/detect',
+    },
+    trace_id: traceId,
+  });
+});
+
+
 // ── Boot ─────────────────────────────────────────────────────────────────────
 const PORT = process.env.PORT || 3019;
 app.listen(PORT, async () => {
